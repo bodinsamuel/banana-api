@@ -6,30 +6,38 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract
+class User extends Model implements AuthenticatableContract
 {
-    use Authenticatable, CanResetPassword;
+    use SoftDeletes;
+    use Authenticatable;
 
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
     protected $table = 'users';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $primaryKey = 'user_id';
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-    protected $hidden = ['password', 'remember_token'];
+    protected $fillable = ['login', 'email', 'password'];
+
+    protected $hidden = ['password'];
+
+    const CREATED_AT = 'date_created';
+
+    const UPDATED_AT = 'date_updated';
+
+    const DELETED_AT = 'date_deleted';
+
+    public function apiGetLinks()
+    {
+        return [
+            'self' => route('get_user', ['id' => $this->getKey()]),
+        ];
+    }
+
+    // RELATIONSHIPS
+    public function media()
+    {
+        return $this->belongsTo('App\Media');
+    }
+
 }

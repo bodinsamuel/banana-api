@@ -1,5 +1,7 @@
 <?php
 
+use App\Library\Api\Handler AS ApiHandler;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -12,22 +14,42 @@
 */
 
 Route::get('/', function(){
-    return response()->json([
-        '/quizzes/',
-    ], 200);
+
+    $api = new ApiHandler('V1');
+
+    $api->addLink('quizzes', route('get_quizzes'));
+
+    return $api->send();
 });
 
 //************************************************************* Quizzes
-Route::get('/quizzes/', 'QuizzesController@getQuizzes'); # get home
+Route::get('/quizzes', [
+    'as' => 'get_quizzes',
+    'uses' => 'QuizzesController@getQuizzes'
+]); # get home
 
-Route::get('/quizzes/{id}/', 'QuizzesController@getQuiz'); # get one
-Route::post('/quizzes/{id}/', 'QuizzesController@postQuiz'); # send all responses at once
+Route::get('/quizzes/{id}', [
+    'as' => 'get_quiz',
+    'uses' => 'QuizzesController@getQuiz'
+]); # get one
 
+Route::post('/quizzes/{id}', [
+    'as' => 'post_quiz_response',
+    'uses' => 'QuizzesController@postQuiz'
+]); # send response
+
+Route::get('/quizzes/{id}/likes', [
+    'as' => 'get_quiz_likes',
+    'uses' => 'LikesController@getQuizLikes'
+]); # get comments
 // Route::get('/quizzes/{id}/likes/'); # get all likes for a quizz
 // Route::post('/quizzes/{id}/likes/'); # like a quizz
 // Route::delete('/quizzes/{id}/likes/'); # unlike a quizz
 
-// Route::get('/quizzes/{id}/comments/'); # get comments
+Route::get('/quizzes/{id}/comments', [
+    'as' => 'get_quiz_comments',
+    'uses' => 'CommentsController@getQuizComments'
+]); # get comments
 // Route::post('/quizzes/{id}/comments/'); # post one comments
 // Route::delete('/quizzes/{id}/comments/{id}/'); # delete one comment
 
@@ -54,4 +76,7 @@ Route::post('/quizzes/{id}/', 'QuizzesController@postQuiz'); # send all response
 // //*************************************************************** USER
 
 // Route::get('/users/');
-// Route::get('/users/{id}/');
+Route::get('/users/{id}', [
+    'as' => 'get_user',
+    'uses' => 'UsersController@getUser'
+]); # get one

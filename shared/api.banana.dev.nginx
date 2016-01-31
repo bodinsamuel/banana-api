@@ -5,7 +5,7 @@ server {
     access_log  /var/log/nginx/api.banana.dev.access.log;
     error_log   /var/log/nginx/api.banana.dev.error.log;
 
-    root /home/bn/banana-api/public/;
+    root /home/banana-api/public/;
     index index.php; # for home to work
 
     location / {

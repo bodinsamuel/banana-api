@@ -26,6 +26,15 @@ class QuizTableSeeder extends Seeder
         $quiz->state_visibility = 1;
         $quiz->save();
 
+        $quiz = new Quiz();
+        $quiz->user_id = 1;
+        $quiz->media_id = 2;
+        $quiz->type = 'classic';
+        $quiz->title = 'Seeded quiz 2';
+        $quiz->content = 'loremipsum 2';
+        $quiz->state_visibility = 1;
+        $quiz->save();
+
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

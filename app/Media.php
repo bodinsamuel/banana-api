@@ -25,6 +25,11 @@ class Media extends Model
 
     const DELETED_AT = 'date_deleted';
 
+    public function getApiType()
+    {
+        return 'medium';
+    }
+
     public function getDateUpdatedAttribute($value)
     {
         return \Carbon\Carbon::parse($value)->format('Y-m-dTH:i:sP');

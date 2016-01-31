@@ -23,8 +23,12 @@ class QuizzesController extends Controller
         $quizzes = $quizzes->get();
 
         $api = new ApiHandler();
-        $api->setModel($quizzes);
+        $api->setCollection($quizzes)
+            ->isCollection()
+            ->enableSideloading();
 
+
+        $api->addLink('self', route('get_quizzes', ['from' => $fromPrev, 'limit' => $limit]));
         if ($quizzes->count() === $limit)
             $api->addLink('next', route('get_quizzes', ['from' => $quizzes->last()->getKey(), 'limit' => $limit]));
         if ($from)
@@ -42,9 +46,10 @@ class QuizzesController extends Controller
                         ->get();
 
         $api = new ApiHandler();
+        $api->enableSideloading();
 
         if ($quizzes->count() > 0)
-            $api->setModel($quizzes);
+            $api->setCollection($quizzes);
         else
             $api->setState(404, 'not_found');
 

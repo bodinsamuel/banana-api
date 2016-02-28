@@ -1,0 +1,45 @@
+server {
+    listen   80;
+
+    server_name media.banana.dev;
+    access_log  /var/log/nginx/media.banana.dev.access.log;
+    error_log   /var/log/nginx/media.banana.dev.error.log;
+
+    root /home/banana-api/public/;
+    index index.php; # for home to work
+
+    location /media_server {
+        internal;
+        alias /var/www/pfe.dev/media/;
+    }
+
+    location /media_server_404 {
+        internal;
+        alias /var/www/pfe.dev/media/;
+        return 404;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    location ~ \.php$ {
+        try_files $uri $uri/ /index.php =404;
+        fastcgi_pass 127.0.0.1:9000;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+        fastcgi_param APP_ENV dev;
+    }
+
+    # disable cache
+    sendfile off;
+
+    location = /50x.html {
+        root /usr/share/nginx/www;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}

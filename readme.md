@@ -16,11 +16,19 @@
   - mysql
     - apt-get install mysql-server mysql-client libmysqlclient15-dev mysql-common
   - php 5.6
-    - apt-get install php5-common php5-fpm
+    - apt-get install php5-common php5-fpm php5-mysql
   - elasticsearch
 
 
 # init
-    - mysql -D banana < shared/schema.sql
-    - php artisan migrate [y]
-    - php artisan db:seed [y]
+  - composer install
+  - mysql =>
+    - CREATE USER 'bananauser'@'localhost' IDENTIFIED BY 'bananauser123';
+    - GRANT ALL PRIVILEGES ON `banana`.* TO 'bananauser'@'localhost'
+  - mysql -D banana < shared/schema.sql
+  - php artisan migrate [y]
+  - php artisan db:seed [y]
+
+
+# Debug
+tail -f /var/log/nginx/api.banana.dev.error.log

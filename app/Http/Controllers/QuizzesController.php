@@ -43,6 +43,7 @@ class QuizzesController extends Controller
                         ->with('user')
                         ->with('questions')
                         ->with('results')
+                        ->with('media')
                         ->get();
 
         $api = new ApiHandler();

@@ -1,5 +1,4 @@
 # install DEV
-
   - git clone
   - composer install
   - Ngninx conf

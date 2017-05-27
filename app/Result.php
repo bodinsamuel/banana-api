@@ -13,7 +13,7 @@ class Result extends Model
 
     protected $primaryKey = 'result_id';
 
-    protected $fillable = ['quiz_id', 'media_id', 'type', 'title', 'content'];
+    protected $fillable = ['quiz_id', 'media_id', 'title', 'content', 'moreof'];
 
     protected $dateFormat = 'Y-m-d H:i:s';
 

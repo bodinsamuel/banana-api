@@ -17,6 +17,8 @@ class Users extends Migration
             $table->unsignedInteger('media_id')->nullable();
             $table->string('login', 25);
             $table->string('password', 155);
+            $table->string('first_name', 75);
+            $table->string('last_name', 125);
             $table->string('email', 255);
             $table->dateTime('date_created');
             $table->dateTime('date_updated');

@@ -27,6 +27,11 @@ class QuestionTableSeeder extends Seeder
         $quiz->user_id = 1;
         $quiz->title = 'Seeded question 2';
         $quiz->save();
+        $quiz = new Question();
+        $quiz->quiz_id = 1;
+        $quiz->user_id = 1;
+        $quiz->title = 'Seeded question 3';
+        $quiz->save();
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

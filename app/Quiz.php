@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Quiz extends Model
 {
     use SoftDeletes;
-    
+
     protected $table = 'quizzes';
 
     protected $primaryKey = 'quiz_id';
@@ -40,7 +40,7 @@ class Quiz extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User')->select(['user_id', 'login', 'media_id'])->with('media');
+        return $this->belongsTo('App\User')->select(['user_id', 'login', 'first_name', 'last_name', 'media_id'])->with('media');
     }
 
     public function questions()
@@ -50,6 +50,6 @@ class Quiz extends Model
 
     public function results()
     {
-        return $this->hasMany('App\Result')->select(['result_id', 'quiz_id', 'title', 'content']);
+        return $this->hasMany('App\Result')->select(['result_id', 'quiz_id', 'title', 'content', 'moreof']);
     }
 }

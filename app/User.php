@@ -37,7 +37,7 @@ class User extends Model implements AuthenticatableContract
     // RELATIONSHIPS
     public function media()
     {
-        return $this->belongsTo('App\Media');
+        return $this->belongsTo('App\Media')->select(['media_id', 'type', 'mime', 'width', 'height']);
     }
 
 }

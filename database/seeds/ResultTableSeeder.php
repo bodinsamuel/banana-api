@@ -19,27 +19,27 @@ class ResultTableSeeder extends Seeder
 
         $res = new Result();
         $res->quiz_id = 1;
-        $res->type = 1;
-        $res->title = 'Seeded result';
-        $res->content = 'lorem ipsum';
+        $res->title = 'Top , more of 3';
+        $res->content = '';
+        $res->moreof = '3';
         $res->save();
         $res = new Result();
         $res->quiz_id = 1;
-        $res->type = 2;
-        $res->title = 'Seeded result';
+        $res->title = 'Good, more of 2';
         $res->content = 'lorem ipsum';
+        $res->moreof = '2';
         $res->save();
         $res = new Result();
         $res->quiz_id = 1;
-        $res->type = 3;
-        $res->title = 'Seeded result';
+        $res->title = 'Meh, more of 1';
         $res->content = 'lorem ipsum';
+        $res->moreof = '1';
         $res->save();
         $res = new Result();
         $res->quiz_id = 1;
-        $res->type = 4;
-        $res->title = 'Seeded result';
+        $res->title = 'Bad !, more of 0';
         $res->content = 'lorem ipsum';
+        $res->moreof = '0';
         $res->save();
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');

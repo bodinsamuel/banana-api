@@ -17,7 +17,6 @@ class Results extends Migration
             $table->unsignedInteger('quiz_id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('media_id')->nullable();
-            $table->string('type', 3);
             $table->string('title', 255);
             $table->text('content');
             $table->dateTime('date_created');

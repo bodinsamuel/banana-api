@@ -20,6 +20,7 @@ Route::get('/', function(){
     $api = new ApiHandler('V1');
 
     $api->addLink('quizzes', route('get_quizzes'));
+    $api->addLink('tags', route('get_tags'));
 
     return $api->send();
 });
@@ -27,23 +28,15 @@ Route::get('/', function(){
 //************************************************************* Quizzes
 Route::get('/quizzes', [
     'as' => 'get_quizzes',
-    'uses' => 'QuizzesController@getQuizzes'
+    'uses' => 'QuizzesController@last'
 ]); # get home
 
 Route::get('/quizzes/{id}', [
     'as' => 'get_quiz',
-    'uses' => 'QuizzesController@getQuiz'
+    'uses' => 'QuizzesController@one'
 ]); # get one
 
-Route::post('/quizzes/{id}', [
-    'as' => 'post_quiz_response',
-    'uses' => 'QuizzesController@postQuiz'
-]); # send response
-
-Route::get('/quizzes/{id}/likes', [
-    'as' => 'get_quiz_likes',
-    'uses' => 'LikesController@getQuizLikes'
-]); # get comments
+# get comments
 // Route::get('/quizzes/{id}/likes/'); # get all likes for a quizz
 // Route::post('/quizzes/{id}/likes/'); # like a quizz
 // Route::delete('/quizzes/{id}/likes/'); # unlike a quizz
@@ -78,7 +71,21 @@ Route::get('/quizzes/{id}/comments', [
 // //*************************************************************** USER
 
 // Route::get('/users/');
-Route::get('/users/{id}', [
+Route::get('/users/{name}', [
     'as' => 'get_user',
-    'uses' => 'UsersController@getUser'
+    'uses' => 'UsersController@one'
+]); # get one
+
+
+// //*************************************************************** TAGS
+
+// Route::get('/users/');
+// Route::get('/users/');
+Route::get('/tags', [
+    'as' => 'get_tags',
+    'uses' => 'TagsController@last'
+]); # get one
+Route::get('/tags/{name}', [
+    'as' => 'get_tag',
+    'uses' => 'TagsController@one'
 ]); # get one

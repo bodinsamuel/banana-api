@@ -8,16 +8,16 @@ use Illuminate\Http\Request;
 
 class QuizzesController extends Controller
 {
-    public function getQuizzes(Request $request)
+    public function last(Request $request)
     {
         $from = (int)$request->input('from', null);
         $limit = (int)$request->input('limit', 10);
         $fromPrev = $from - $limit > 0 ? $from - $limit: null;
 
-        $quizzes = Quiz::take($limit)->orderBy('date_created')
+        $quizzes = Quiz::take($limit)->recent()->published()
                         ->with('user')
                         ->with('media');
-        if($from > 0)
+        if ($from > 0)
             $quizzes->skip($from);
 
         $quizzes = $quizzes->get();
@@ -37,17 +37,18 @@ class QuizzesController extends Controller
         return $api->send();
     }
 
-    public function getQuiz($id)
+    public function one($id)
     {
         $quizzes = Quiz::where('quiz_id', (int)$id)
+                        ->published()
                         ->with('user')
                         ->with('questions')
                         ->with('results')
                         ->with('media')
+                        ->with('tags')
                         ->get();
 
         $api = new ApiHandler();
-        // $api->enableSideloading();
 
         if ($quizzes->count() > 0)
             $api->setCollection($quizzes);
@@ -55,10 +56,5 @@ class QuizzesController extends Controller
             $api->setState(404, 'not_found');
 
         return $api->send();
-    }
-
-    public function postQuiz($id)
-    {
-        # code...
     }
 }

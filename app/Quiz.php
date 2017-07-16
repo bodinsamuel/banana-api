@@ -13,7 +13,13 @@ class Quiz extends Model
 
     protected $primaryKey = 'quiz_id';
 
-    protected $fillable = ['user_id', 'media_id', 'type', 'title', 'content', 'state_visibility'];
+    protected $fillable = [
+        'user_id', 'media_id', 'type', 'title', 'content', 'state_visibility',
+        'url', 'date_published'
+    ];
+    protected $dates = [
+        'date_deleted', 'date_created', 'date_updated', 'date_published'
+    ];
 
     protected $dateFormat = 'Y-m-d H:i:s';
 
@@ -28,11 +34,25 @@ class Quiz extends Model
         return [
             'self' => route('get_quiz', ['id' => $this->getKey()]),
             'comments' => route('get_quiz_comments', ['id' => $this->getKey()]),
-            'likes' => route('get_quiz_likes', ['id' => $this->getKey()]),
         ];
     }
 
+    public function scopePublished($query)
+    {
+        return $query->whereNotNull('date_published');
+    }
+
+    public function scopeRecent($query)
+    {
+        return $query->orderBy('quizzes.date_created');
+    }
+
     // RELATIONSHIPS
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag', 'quiz_has_tags');
+    }
+
     public function media()
     {
         return $this->belongsTo('App\Media')->select(['media_id', 'type', 'mime', 'width', 'height']);

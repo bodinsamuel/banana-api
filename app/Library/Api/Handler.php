@@ -180,14 +180,17 @@ class Handler
 
             // detect type of model with classname
             $className = get_class($model);
-            $type = method_exists($model, 'getApiType') ? $model->getApiType() : mb_strtolower(substr($className, strrpos($className, '\\')+1));
+            $type = method_exists($model, 'getApiType')
+                    ? $model->getApiType()
+                    : mb_strtolower(substr($className, strrpos($className, '\\')+1));
 
             $export['type'] = $type;
             $export['id'] = $model->getKey();
 
             $export['attributes'] = $model->attributesToArray();
             unset($export['attributes'][$model->getKeyName()]);
-            foreach ($export['attributes'] as $key => $value) {
+            foreach ($export['attributes'] as $key => $value)
+            {
                 if (strpos($key, '_id') !== FALSE)
                     unset($export['attributes'][$key]);
             }
@@ -206,7 +209,14 @@ class Handler
                     $isSingle = true;
                     $relModels = [$relModels];
                 }
-                $_rel_type = method_exists($relModels[0], 'getApiType') ? $relModels[0]->getApiType() : $relType;
+                if (empty($relModels[0]))
+                {
+                    continue;
+                }
+
+                $_rel_type = method_exists($relModels[0], 'getApiType')
+                             ? $relModels[0]->getApiType()
+                             : $relType;
 
                 // TODO: sideload this
                 $relExported = $this->exportModel($relModels, $level+1);

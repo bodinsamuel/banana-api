@@ -19,7 +19,7 @@ class User extends Model implements AuthenticatableContract
 
     protected $fillable = ['login', 'email', 'password'];
 
-    protected $hidden = ['password'];
+    protected $hidden = ['password', 'email'];
 
     const CREATED_AT = 'date_created';
 
@@ -38,6 +38,10 @@ class User extends Model implements AuthenticatableContract
     public function media()
     {
         return $this->belongsTo('App\Media')->select(['media_id', 'type', 'mime', 'width', 'height']);
+    }
+    public function quiz()
+    {
+        return $this->hasMany('App\Quiz');
     }
 
 }

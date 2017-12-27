@@ -54,10 +54,11 @@ return [
 
         'mysql' => [
             'driver'    => 'mysql',
-            'host'      => env('DB_HOST', '127.0.0.1'),
-            'database'  => env('DB_DATABASE', 'banana'),
-            'username'  => env('DB_USERNAME', 'bananauser'),
-            'password'  => env('DB_PASSWORD', 'bananauser123'),
+            'host'      => env('DB_HOST', 'db'),
+            'port'=> '3306',
+            'database'  => env('DB_DATABASE', 'bananaapi'),
+            'username'  => env('DB_USERNAME', 'bananaapi'),
+            'password'  => env('DB_PASSWORD', 'password1234'),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',

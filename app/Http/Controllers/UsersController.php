@@ -9,23 +9,10 @@ use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
-    public function one(Request $request, $login)
+    public function one(Request $request, $id)
     {
-        $limit = min(20, (int)$request->input('limit', 20));
-
         $api = new ApiHandler();
-        $user = User::where('login', $login)
-                ->withCount([
-                    'quiz' => function ($query) {
-                        $query->recent()->published();
-                    }
-                ])
-                ->with(['quiz' => function ($q) use ($limit) {
-                    $q->published()
-                        ->recent()
-                        ->with('media')
-                        ->take($limit);
-                }])
+        $user = User::where('user_id', $id)
                 ->with('media')
                 ->get();
 

@@ -15,11 +15,6 @@ class TagsController extends Controller
 
         $api = new ApiHandler();
         $tag = Tag::take($limit)
-                ->withCount([
-                    'quiz' => function ($query) {
-                        $query->recent()->published();
-                    }
-                ])
                 ->get();
 
         if ($tag->count() > 0)
@@ -40,18 +35,6 @@ class TagsController extends Controller
 
         $api = new ApiHandler();
         $tag = Tag::where('url', $url)
-                ->withCount([
-                    'quiz' => function ($query) {
-                        $query->recent()->published();
-                    }
-                ])
-                ->with(['quiz' => function ($q) use ($limit) {
-                    $q->published()
-                        ->recent()
-                        ->with('user')
-                        ->with('media')
-                        ->take($limit);
-                }])
                 ->get();
 
         if ($tag->count() > 0)

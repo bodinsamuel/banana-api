@@ -71,7 +71,7 @@ Route::get('/quizzes/{id}/comments', [
 // //*************************************************************** USER
 
 // Route::get('/users/');
-Route::get('/users/{name}', [
+Route::get('/users/{id}', [
     'as' => 'get_user',
     'uses' => 'UsersController@one'
 ]); # get one

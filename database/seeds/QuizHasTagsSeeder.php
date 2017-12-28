@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Tag;
 use App\Quiz;
 
-class QuizHasTags extends Seeder
+class QuizHasTagsSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -31,6 +31,7 @@ class User extends Model implements AuthenticatableContract
     {
         return [
             'self' => route('get_user', ['id' => $this->getKey()]),
+            'quizzes' => route('get_quizzes', ['author' => $this->getKey()]),
         ];
     }
 

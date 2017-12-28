@@ -25,7 +25,6 @@ class QuizzesController extends Controller
         $api = new ApiHandler();
         $api->setCollection($quizzes)
             ->isCollection();
-            // ->enableSideloading();
 
 
         $api->addLink('self', route('get_quizzes', ['from' => $fromPrev, 'limit' => $limit]));

@@ -27,4 +27,13 @@ class Tag extends Model
     {
         return $this->belongsToMany('App\Quiz', 'quiz_has_tags');
     }
+
+    public function apiGetLinks()
+    {
+        return [
+            'self' => route('get_tag', ['name' => $this->url]),
+            'quizzes' => route('get_quizzes', ['tag' => $this->getKey()]),
+        ];
+    }
+
 }
